@@ -1,6 +1,6 @@
 # Financial Report Automation
 
-Cleans raw bank-style transaction files (CSV or Excel) and writes a normalized report with spending metrics.
+Cleans raw bank-style transaction files (CSV or `.xlsx`) and writes a normalized report with spending metrics.
 
 The pipeline loads the file, standardizes dates and amounts, removes duplicate rows, then exports clean transactions plus a summary.
 
@@ -25,7 +25,7 @@ python main.py -i data/raw/transactions_dirty.csv -o output/report.xlsx
 
 | Flag | Meaning |
 |------|---------|
-| `-i`, `--input` | Input CSV or Excel file |
+| `-i`, `--input` | Input `.csv` or `.xlsx` file |
 | `-o`, `--output` | Output path (format from extension: `.csv` or `.xlsx`) |
 
 Default output if `-o` is omitted:

@@ -47,7 +47,7 @@ def write_report(df: pd.DataFrame, output_path: Path) -> list[Path]:
         )
         by_category.to_csv(category_path, index=False)
         written.extend([summary_path, category_path])
-    elif suffix in (".xlsx", ".xls"):
+    elif suffix == ".xlsx":
         with pd.ExcelWriter(output_path, engine="openpyxl") as writer:
             transactions.to_excel(writer, sheet_name="Transactions", index=False)
             _write_summary_sheet(writer, summary, by_category)

@@ -24,7 +24,7 @@ def main() -> None:
         "-i",
         type=Path,
         required=True,
-        help="Input CSV or Excel path",
+        help="Input .csv or .xlsx path",
     )
     parser.add_argument(
         "--output",
