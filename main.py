@@ -4,6 +4,7 @@ from pathlib import Path
 from src.cleaner import remove_duplicates
 from src.loader import load_transactions
 from src.normalizer import normalize_amounts, normalize_dates
+from src.reporter import write_report
 
 
 def build_clean_dataframe(input_path: Path):
@@ -12,18 +13,6 @@ def build_clean_dataframe(input_path: Path):
     df = normalize_amounts(df)
     df = remove_duplicates(df)
     return df
-
-
-def write_output(df, output_path: Path) -> None:
-    output_path = output_path.resolve()
-    output_path.parent.mkdir(parents=True, exist_ok=True)
-    suffix = output_path.suffix.lower()
-    if suffix == ".csv":
-        df.to_csv(output_path, index=False)
-    elif suffix in (".xlsx", ".xls"):
-        df.to_excel(output_path, index=False)
-    else:
-        raise ValueError(f"Unsupported output format: {suffix} (use .csv or .xlsx)")
 
 
 def main() -> None:
@@ -53,8 +42,10 @@ def main() -> None:
         output_path = Path("output") / f"{input_path.stem}_clean.csv"
 
     df = build_clean_dataframe(input_path)
-    write_output(df, output_path)
-    print(f"Wrote {len(df)} rows to {output_path.resolve()}")
+    written = write_report(df, output_path)
+    print(f"Wrote {len(df)} transactions to {written[0]}")
+    for path in written[1:]:
+        print(f"  summary: {path}")
 
 
 if __name__ == "__main__":
